@@ -54,14 +54,34 @@ ADMIN_PASSWORD=your_admin_password
 DOMAINS=domain.com,www.domain.com,portainer.domain.com
 
 #
+# Main domain for SSL certificate
+#
+MAIN_DOMAIN=portainer.domain.com
+
+#
 # Your email for Let's Encrypt register
 #
 LETSENCRYPT_EMAIL=your_email@domain.com
 
 #
+# Path to the certificates
+# If you use our webproxy should be:
+# /home/user/webproxy/data/certs
+PORTAINER_SSL_PATH=/path/to/your/certs
+
+#
+# SSL Certificates previously generated
+# You may use below webproxy to generate your ssl certificate
+#(https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
+#
+PORTAINER_SSL_CERTIFICATE=/certs/$MAIN_DOMAIN.crt
+PORTAINER_SSL_KEY=/certs/$MAIN_DOMAIN.key
+
+#
 # Network name
 # 
-# The network name must be the same name of your webproxy (proxy container)
+# Your container app must use a network conencted to your webproxy 
+# https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion
 #
 NETWORK=webproxy
 
@@ -72,7 +92,7 @@ NETWORK=webproxy
 
 You can run our script, and it will use your predefined password:
 ```bash
-# ./run.sh
+# ./start.sh
 ```
 
 Or you can simply start your compose enviornment:
@@ -81,6 +101,8 @@ Or you can simply start your compose enviornment:
 ```
 
 > If you run only `docker-compose up -d` you will be prompted to set your admin passowrd when accessing your browser.
+
+> This container must be in a network connected to your webproxy containers or use the same network of the webproxy.
 
 > Please keep in mind that when starting for the first time it may take a few moments (even a couple minutes) to get your Let's Encrypt certificates generated.
 
